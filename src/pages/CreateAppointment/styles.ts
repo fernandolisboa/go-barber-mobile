@@ -1,7 +1,19 @@
 import styled from 'styled-components/native';
 
-import { Platform } from 'react-native';
+import { Platform, FlatList } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+
+import { RectButton } from 'react-native-gesture-handler';
+
+import { IProvider } from './index';
+
+interface ProviderContainerProps {
+  selected: boolean;
+}
+
+interface ProviderNameProps {
+  selected: boolean;
+}
 
 const barHeight = Platform.OS === 'ios' ? getStatusBarHeight() : 0;
 
@@ -35,4 +47,45 @@ const UserAvatar = styled.Image`
   margin-left: auto;
 `;
 
-export { Container, Header, BackButton, HeaderTitle, UserAvatar };
+const ProvidersListContainer = styled.View`
+  height: 112px;
+`;
+
+const ProvidersList = styled(FlatList as new () => FlatList<IProvider>)`
+  padding: 32px 24px;
+`;
+
+const ProviderContainer = styled(RectButton)<ProviderContainerProps>`
+  background: ${({ selected }) => (selected ? '#ff9000' : '#3e3b47')};
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 12px;
+  margin-right: 16px;
+  border-radius: 10px;
+`;
+
+const ProviderAvatar = styled.Image`
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+`;
+
+const ProviderName = styled.Text<ProviderNameProps>`
+  margin-left: 8px;
+  font-family: 'RobotoSlab-Medium';
+  font-size: 16px;
+  color: ${({ selected }) => (selected ? '#232129' : '#f4ede8')};
+`;
+
+export {
+  Container,
+  Header,
+  BackButton,
+  HeaderTitle,
+  UserAvatar,
+  ProvidersListContainer,
+  ProvidersList,
+  ProviderContainer,
+  ProviderAvatar,
+  ProviderName,
+};
