@@ -50,15 +50,14 @@ const AuthProvider: React.FC = ({ children }) => {
         setData({ token, user: JSON.parse(user) });
       }
 
-      setTimeout(() => setLoading(false), 3000);
-      // setLoading(false);
+      setLoading(false);
     }
 
     loadStorageData();
   });
 
   const signIn = useCallback(async ({ email, password }) => {
-    const response = await api.post('sessions', { login: email, password });
+    const response = await api.post('sessions', { email, password });
 
     const { token, user } = response.data;
 
