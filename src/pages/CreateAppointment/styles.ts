@@ -75,6 +75,30 @@ const ProviderName = styled.Text<ProviderNameProps>`
   color: ${({ selected }) => (selected ? '#232129' : '#f4ede8')};
 `;
 
+const Calendar = styled.View``;
+
+const CalendarTitle = styled.Text`
+  font-family: 'RobotoSlab-Medium';
+  font-size: 24px;
+  color: #f4ede8;
+  margin: 0 24px 24px;
+`;
+
+const OpenDatePickerButton = styled(RectButton)`
+  height: 46px;
+  background: #ff9000;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  margin: 0 24px;
+`;
+
+const OpenDatePickerButtonText = styled.Text`
+  font-family: 'RobotoSlab-Medium';
+  font-size: 16px;
+  color: #232129;
+`;
+
 export {
   Container,
   Header,
@@ -86,4 +110,8 @@ export {
   ProviderContainer,
   ProviderAvatar,
   ProviderName,
+  Calendar,
+  CalendarTitle,
+  OpenDatePickerButton,
+  OpenDatePickerButtonText,
 };
