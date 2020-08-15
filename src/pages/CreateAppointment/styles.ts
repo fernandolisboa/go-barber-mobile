@@ -15,6 +15,15 @@ interface ProviderNameProps {
   selected: boolean;
 }
 
+interface IHourProps {
+  selected: boolean;
+  available: boolean;
+}
+
+interface IHourTextProps {
+  selected: boolean;
+}
+
 const Container = styled.View`
   flex: 1;
 `;
@@ -32,9 +41,9 @@ const Header = styled.View`
 const BackButton = styled.TouchableOpacity``;
 
 const HeaderTitle = styled.Text`
-  color: #f4ede8;
   font-family: 'RobotoSlab-Medium';
   font-size: 20px;
+  color: #f4ede8;
   margin-left: 16px;
 `;
 
@@ -44,6 +53,8 @@ const UserAvatar = styled.Image`
   border-radius: 28px;
   margin-left: auto;
 `;
+
+const Content = styled.ScrollView``;
 
 const ProvidersListContainer = styled.View`
   height: 112px;
@@ -99,12 +110,55 @@ const OpenDatePickerButtonText = styled.Text`
   color: #232129;
 `;
 
+const Schedule = styled.View`
+  padding: 24px 0 16px;
+`;
+
+const ScheduleTitle = styled.Text`
+  font-family: 'RobotoSlab-Medium';
+  font-size: 24px;
+  color: #f4ede8;
+  margin: 0 24px 24px;
+`;
+
+const Section = styled.View`
+  margin-bottom: 24px;
+`;
+
+const SectionTitle = styled.Text`
+  font-family: 'RobotoSlab-Regular';
+  font-size: 18px;
+  color: #999591;
+  margin: 0 24px 12px;
+`;
+
+const SectionContent = styled.ScrollView.attrs({
+  horizontal: true,
+  showsHorizontalScrollIndicator: false,
+  contentContainerStyle: { paddingHorizontal: 24 },
+})``;
+
+const Hour = styled(RectButton)<IHourProps>`
+  padding: 12px;
+  background: ${({ selected }) => (selected ? '#ff9000' : '#3e3b47')};
+  border-radius: 10px;
+  margin-right: 8px;
+  opacity: ${({ available }) => (available ? 1 : 0.3)};
+`;
+
+const HourText = styled.Text<IHourTextProps>`
+  font-family: 'RobotoSlab-Regular';
+  font-size: 16px;
+  color: ${({ selected }) => (selected ? '#232129' : '#f4ede8')};
+`;
+
 export {
   Container,
   Header,
   BackButton,
   HeaderTitle,
   UserAvatar,
+  Content,
   ProvidersListContainer,
   ProvidersList,
   ProviderContainer,
@@ -114,4 +168,11 @@ export {
   CalendarTitle,
   OpenDatePickerButton,
   OpenDatePickerButtonText,
+  Schedule,
+  ScheduleTitle,
+  Section,
+  SectionTitle,
+  SectionContent,
+  Hour,
+  HourText,
 };
