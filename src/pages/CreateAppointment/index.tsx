@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect, useMemo } from 'react';
-import { Platform } from 'react-native';
+import { Platform, Alert } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Feather';
@@ -32,6 +32,8 @@ import {
   SectionContent,
   Hour,
   HourText,
+  CreateAppointmentButton,
+  CreateAppointmentButtonText,
 } from './styles';
 
 export interface IProvider {
@@ -64,7 +66,7 @@ const CreateAppointment: React.FC = () => {
     routeParams.providerId,
   );
 
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
 
   useEffect(() => {
     api.get<IProvider[]>('providers').then(({ data }) => {
@@ -109,6 +111,28 @@ const CreateAppointment: React.FC = () => {
     (hour: number) => setSelectedHour(hour),
     [],
   );
+
+  const handleCreateAppointment = useCallback(async () => {
+    try {
+      const date = new Date(selectedDate);
+      date.setHours(selectedHour, 0);
+
+      await api.post('appointments', {
+        provider_id: selectedProvider,
+        date,
+      });
+
+      navigate('AppointmentCreated', {
+        date: date.getTime(),
+        provider_id: selectedProvider,
+      });
+    } catch (error) {
+      Alert.alert(
+        'Erro ao criar o agendamento',
+        'Ocorreu um erro ao tentar criar o agendamento. Tente novamente!',
+      );
+    }
+  }, [selectedDate, selectedHour, selectedProvider, navigate]);
 
   const dateTimePicker = useMemo(() => {
     return (
@@ -238,6 +262,10 @@ const CreateAppointment: React.FC = () => {
             </SectionContent>
           </Section>
         </Schedule>
+
+        <CreateAppointmentButton onPress={handleCreateAppointment}>
+          <CreateAppointmentButtonText>Agendar</CreateAppointmentButtonText>
+        </CreateAppointmentButton>
       </Content>
     </Container>
   );
