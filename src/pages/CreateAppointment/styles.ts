@@ -47,6 +47,8 @@ const HeaderTitle = styled.Text`
   margin-left: 16px;
 `;
 
+const ProfileButton = styled.TouchableOpacity``;
+
 const UserAvatar = styled.Image`
   width: 56px;
   height: 56px;
@@ -172,6 +174,7 @@ export {
   Header,
   BackButton,
   HeaderTitle,
+  ProfileButton,
   UserAvatar,
   Content,
   ProvidersListContainer,
