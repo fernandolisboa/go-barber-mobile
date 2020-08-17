@@ -51,7 +51,7 @@ const Profile: React.FC = () => {
   const newPasswordInputRef = useRef<TextInput>(null);
   const confirmPasswordInputRef = useRef<TextInput>(null);
 
-  const { navigate, goBack } = useNavigation();
+  const { goBack } = useNavigation();
 
   const handleGoBack = useCallback(() => goBack(), [goBack]);
 
