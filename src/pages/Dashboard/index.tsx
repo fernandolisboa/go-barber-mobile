@@ -30,7 +30,7 @@ export interface IProvider {
 }
 
 const Dashboard: React.FC = () => {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
 
   const [providers, setProviders] = useState<IProvider[]>([]);
 
