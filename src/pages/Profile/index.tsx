@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
+import ImagePicker from 'react-native-image-picker';
 
 import * as Yup from 'yup';
 
@@ -145,6 +146,42 @@ const Profile: React.FC = () => {
     [updateUser, goBack],
   );
 
+  const handleUpdateAvatar = useCallback(() => {
+    ImagePicker.showImagePicker(
+      {
+        title: 'Selecione um avatar',
+        takePhotoButtonTitle: 'Usar a câmera',
+        chooseFromLibraryButtonTitle: 'Escolher da galeria',
+        cancelButtonTitle: 'Cancelar',
+      },
+      ({ didCancel, error, uri }) => {
+        if (didCancel) {
+          return;
+        }
+
+        if (error) {
+          Alert.alert('Erro selecionando seu avatar', `${error} [Picker]`);
+          return;
+        }
+
+        const formData = new FormData();
+
+        formData.append('avatar', {
+          type: 'image/jpeg',
+          name: `${user.id}.jpg`,
+          uri,
+        });
+
+        api
+          .patch('users/avatar', formData)
+          .then(({ data }) => updateUser(data))
+          .catch(except =>
+            Alert.alert('Erro atualizando seu avatar', `${except} [API]`),
+          );
+      },
+    );
+  }, [user.id, updateUser]);
+
   return (
     <>
       <KeyboardAvoidingView
@@ -161,7 +198,7 @@ const Profile: React.FC = () => {
               <Icon name="chevron-left" size={24} color="#999591" />
             </BackButton>
 
-            <UserAvatarButton onPress={() => console.log('UserAvatarButton')}>
+            <UserAvatarButton onPress={handleUpdateAvatar}>
               <UserAvatar source={{ uri: user.avatar_url }} />
             </UserAvatarButton>
 
