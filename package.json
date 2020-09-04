@@ -6,7 +6,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest",
+    "test": "jest --watchAll",
+    "test:coverage": "yarn test --coverage --watchAll false",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
@@ -64,6 +65,12 @@
   "jest": {
     "preset": "react-native",
     "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"],
+    "collectCoverageFrom": [
+      "src/components/**/*.tsx",
+      "src/hooks/**/*.tsx",
+      "src/pages/**/*.tsx",
+      "!src/hooks/index.tsx"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
